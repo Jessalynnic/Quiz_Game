@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.bcs371_full_quiz_game.ui.LoginScreen
+import com.example.bcs371_full_quiz_game.ui.RegisterScreen
 import com.example.bcs371_full_quiz_game.ui.theme.BCS371_Full_Quiz_GameTheme
 
 class LoginActivity : ComponentActivity() {
@@ -30,8 +31,8 @@ fun LoginNavigation() {
         composable("login_screen") {
             LoginScreen(navController = navController)
         }
-//        composable("register_screen") {
-//            RegisterScreen(navController = navController)
-//        }
+        composable("register_screen") {
+            RegisterScreen(navController = navController)
+        }
     }
 }
