@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">BCS371_Full_Quiz_Game</string>
+    <string name="title_activity_loginMain">LoginActivity</string>
+</resources>
