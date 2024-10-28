@@ -28,12 +28,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
 fun RegisterScreen(navController: NavController) {
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier
@@ -61,7 +63,7 @@ fun RegisterScreen(navController: NavController) {
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState()),
         ) {
-            Text("Login to Quiz Game", style = MaterialTheme.typography.headlineMedium)
+            Text("Register", style = MaterialTheme.typography.headlineMedium)
             Spacer(modifier = Modifier.height(16.dp))
 
             var firstName by remember { mutableStateOf("") }
@@ -75,7 +77,7 @@ fun RegisterScreen(navController: NavController) {
             OutlinedTextField(
                 value = firstName,
                 onValueChange = { firstName = it },
-                label = { Text("First Name: ") },
+                label = { Text("First Name") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(10.dp))
@@ -85,7 +87,7 @@ fun RegisterScreen(navController: NavController) {
             OutlinedTextField(
                 value = lastName,
                 onValueChange = { lastName = it },
-                label = { Text("Last Name: ") },
+                label = { Text("Last Name") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(10.dp))
@@ -94,18 +96,30 @@ fun RegisterScreen(navController: NavController) {
 
             OutlinedTextField(
                 value = dob,
-                onValueChange = { dob = it },
-                label = { Text("Date of Birth: ") },
+                onValueChange = { input ->
+                    val cleanedInput = input.filter { it.isDigit() }
+                    dob = if (cleanedInput.length <= 4) {
+                        cleanedInput
+                    } else if (cleanedInput.length <= 6) {
+                        cleanedInput.substring(0, 4) + "-" + cleanedInput.substring(4)
+                    } else {
+                        cleanedInput.substring(0, 4) + "-" + cleanedInput.substring(4, 6) + "-" + cleanedInput.substring(6)
+                    }
+                },
+                label = { Text("Date of Birth") },
+                placeholder = { Text("YYYY-MM-DD") },
+                singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(10.dp))
             )
+
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Email Address: ") },
+                label = { Text("Email Address") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(10.dp))
@@ -115,7 +129,7 @@ fun RegisterScreen(navController: NavController) {
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Password: ") },
+                label = { Text("Password") },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -126,7 +140,7 @@ fun RegisterScreen(navController: NavController) {
             OutlinedTextField(
                 value = confirmPass,
                 onValueChange = { confirmPass = it },
-                label = { Text("Confirm Password: ") },
+                label = { Text("Confirm Password") },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .fillMaxWidth()
