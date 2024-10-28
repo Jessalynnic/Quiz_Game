@@ -1,5 +1,6 @@
 package com.example.bcs371_full_quiz_game.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,6 +33,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.bcs371_full_quiz_game.ui.theme.getStoredCredentials
+import com.example.bcs371_full_quiz_game.ui.theme.saveUserData
 
 @Composable
 fun RegisterScreen(navController: NavController) {
@@ -197,9 +200,26 @@ fun RegisterScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(onClick = {
-                // After successful login
-                //navController.context.startActivity(Intent(navController.context, QuizActivity::class.java))
-                //(navController.context as? Activity)?.finish()
+                // Validate the fields first
+                if (firstNameError == null && lastNameError == null && dobError == null && emailError == null && passwordError == null && confirmPassError == null) {
+                    // Call the function to save user data
+                    saveUserData(
+                        context = context,
+                        firstName = firstName,
+                        lastName = lastName,
+                        dob = dob,
+                        email = email,
+                        password = password
+                    )
+
+                    Toast.makeText(context, "Registration Successful", Toast.LENGTH_LONG).show()
+
+                    // Navigate to the next screen (e.g., Quiz screen)
+                    navController.navigate("login_screen")
+                } else {
+                    // Show a message if there are validation errors
+                    Toast.makeText(context, "Please fix the errors before submitting", Toast.LENGTH_LONG).show()
+                }
             }) {
                 Text("Register")
             }
