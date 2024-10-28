@@ -62,14 +62,14 @@ fun LoginScreen(navController: NavController) {
             Text("Login to Quiz Game", style = MaterialTheme.typography.headlineMedium)
             Spacer(modifier = Modifier.height(16.dp))
 
-            var username by remember { mutableStateOf("") }
+            var email by remember { mutableStateOf("") }
             var password by remember { mutableStateOf("") }
 
             // Login fields
             OutlinedTextField(
-                value = username,
-                onValueChange = { username = it },
-                label = { Text("Username") },
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Email Address") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(10.dp))

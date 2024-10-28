@@ -66,6 +66,7 @@ fun RegisterScreen(navController: NavController) {
             Text("Register", style = MaterialTheme.typography.headlineMedium)
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Input states
             var firstName by remember { mutableStateOf("") }
             var lastName by remember { mutableStateOf("") }
             var dob by remember { mutableStateOf("") }
@@ -73,25 +74,54 @@ fun RegisterScreen(navController: NavController) {
             var password by remember { mutableStateOf("") }
             var confirmPass by remember { mutableStateOf("") }
 
-            // Login fields
+            // Error states
+            var firstNameError by remember { mutableStateOf<String?>(null) }
+            var lastNameError by remember { mutableStateOf<String?>(null) }
+            var dobError by remember { mutableStateOf<String?>(null) }
+            var emailError by remember { mutableStateOf<String?>(null) }
+            var passwordError by remember { mutableStateOf<String?>(null) }
+            var confirmPassError by remember { mutableStateOf<String?>(null) }
+
+            // First Name field with length validation
             OutlinedTextField(
                 value = firstName,
-                onValueChange = { firstName = it },
+                onValueChange = {
+                    firstName = it
+                    // Check if firstName is between 3 and 30 characters
+                    firstNameError = when {
+                        firstName.length < 3 -> "First name must be at least 3 characters"
+                        firstName.length > 30 -> "First name cannot exceed 30 characters"
+                        else -> null
+                    }
+                },
                 label = { Text("First Name") },
+                isError = firstNameError != null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(10.dp))
             )
+            if (firstNameError != null) Text(firstNameError!!, color = Color.Red)
+
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = lastName,
-                onValueChange = { lastName = it },
+                onValueChange = {
+                    lastName = it
+                    lastNameError = when {
+                        lastName.length < 3 -> "Last name must be at least 3 characters"
+                        lastName.length > 30 -> "Last name cannot exceed 30 characters"
+                        else -> null
+                    }
+                },
                 label = { Text("Last Name") },
+                isError = lastNameError != null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(10.dp))
             )
+            if (lastNameError != null) Text(lastNameError!!, color = Color.Red)
+
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
@@ -118,34 +148,51 @@ fun RegisterScreen(navController: NavController) {
 
             OutlinedTextField(
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = {
+                    email = it
+                    emailError = if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) "Invalid email format" else null
+                },
                 label = { Text("Email Address") },
+                isError = emailError != null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(10.dp))
             )
+            if (emailError != null) Text(emailError!!, color = Color.Red)
+
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = {
+                    password = it
+                    passwordError = if (password.length < 6) "Password must be at least 6 characters" else null
+                },
                 label = { Text("Password") },
+                isError = passwordError != null,
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(10.dp))
             )
+            if (passwordError != null) Text(passwordError!!, color = Color.Red)
+
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
                 value = confirmPass,
-                onValueChange = { confirmPass = it },
+                onValueChange = {
+                    confirmPass = it
+                    confirmPassError = if (confirmPass != password) "Passwords do not match" else null
+                 },
                 label = { Text("Confirm Password") },
+                isError = confirmPassError != null,
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(10.dp))
             )
+            if (confirmPassError != null) Text(confirmPassError!!, color = Color.Red)
 
             Spacer(modifier = Modifier.height(16.dp))
 
