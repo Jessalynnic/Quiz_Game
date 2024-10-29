@@ -23,3 +23,33 @@ fun getStoredCredentials(context: Context): Pair<String?, String?> {
     val storedPassword = sharedPreferences.getString("password", null)
     return Pair(storedEmail, storedPassword)
 }
+
+// Save quiz stats to SharedPreferences
+fun saveQuizStats(context: Context, correctAnswers: Int, earnedAmount: Int) {
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences("QuizStats", Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+
+    // Increment the count of saved games
+    val gameCount = sharedPreferences.getInt("gameCount", 0) + 1
+    editor.putInt("gameCount", gameCount)
+
+    // Store the correct answers and earnings for each game
+    editor.putInt("correctAnswers_$gameCount", correctAnswers)
+    editor.putInt("earnedAmount_$gameCount", earnedAmount)
+
+    editor.apply() // Save changes asynchronously
+}
+
+// Retrieve all quiz stats from SharedPreferences
+fun getQuizStats(context: Context): List<Pair<Int, Int>> {
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences("QuizStats", Context.MODE_PRIVATE)
+    val gameCount = sharedPreferences.getInt("gameCount", 0)
+
+    val statsList = mutableListOf<Pair<Int, Int>>()
+    for (i in 1..gameCount) {
+        val correctAnswers = sharedPreferences.getInt("correctAnswers_$i", 0)
+        val earnedAmount = sharedPreferences.getInt("earnedAmount_$i", 0)
+        statsList.add(Pair(correctAnswers, earnedAmount))
+    }
+    return statsList
+}

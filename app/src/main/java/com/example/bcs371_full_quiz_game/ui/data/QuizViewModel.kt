@@ -1,5 +1,6 @@
 package com.example.bcs371_full_quiz_game.ui.data
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -116,6 +117,11 @@ class QuizViewModel : ViewModel() {
 
     // Function to get the current question based on the current question index
     fun getCurrentQuestion(): Question = questions[currentQuestion]
+
+    fun completeQuiz(context: Context) {
+        // Save the current stats to SharedPreferences
+        saveQuizStats(context, correctAnswers, earnedAmount)
+    }
 
     // Reset the state to start the quiz again
     fun resetQuiz() {

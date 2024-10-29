@@ -1,5 +1,6 @@
 package com.example.bcs371_full_quiz_game.ui
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,17 +13,26 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.bcs371_full_quiz_game.LoginActivity
 import com.example.bcs371_full_quiz_game.ui.data.QuizViewModel
 
 @Composable
 fun StatScreen(navController: NavController, viewModel: QuizViewModel) {
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.completeQuiz(context)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -72,6 +82,8 @@ fun StatScreen(navController: NavController, viewModel: QuizViewModel) {
             modifier = Modifier.padding(bottom = 20.dp)
         )
 
+
+
         Row (
             verticalAlignment = Alignment.CenterVertically
         )
@@ -82,7 +94,7 @@ fun StatScreen(navController: NavController, viewModel: QuizViewModel) {
                     // Reset the quiz state when the button is clicked
                     viewModel.resetQuiz()
                     // Navigate back to the first question screen
-                    navController.navigate("question_screen")
+                    navController.navigate("quiz_rules")
                 },
                 modifier = Modifier
                     .width(150.dp)
@@ -95,13 +107,17 @@ fun StatScreen(navController: NavController, viewModel: QuizViewModel) {
                 )
             }
             Spacer(modifier = Modifier.width(10.dp))
+
             // Button to exit quiz
             Button(
                 onClick = {
                     // Reset the quiz state when the button is clicked
                     viewModel.resetQuiz()
-                    // Navigate back to the first question screen
-                    navController.navigate("question_screen")
+                    // Start the LoginActivity and clear the current stack
+                    val intent = Intent(context, LoginActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    context.startActivity(intent)
                 },
                 modifier = Modifier
                     .width(150.dp)

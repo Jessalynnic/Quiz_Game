@@ -1,6 +1,7 @@
 package com.example.bcs371_full_quiz_game.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -86,6 +87,14 @@ fun QuizRulesScreen(navController: NavController) {
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
             }
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = "View Stats History",
+                modifier = Modifier.clickable {
+                    navController.navigate("stat_history") // Navigate to the register screen
+                }
+            )
         }
     }
 }
