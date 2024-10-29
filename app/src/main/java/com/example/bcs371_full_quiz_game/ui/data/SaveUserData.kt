@@ -1,4 +1,4 @@
-package com.example.bcs371_full_quiz_game.ui.theme
+package com.example.bcs371_full_quiz_game.ui.data
 
 import android.content.Context
 import android.content.SharedPreferences

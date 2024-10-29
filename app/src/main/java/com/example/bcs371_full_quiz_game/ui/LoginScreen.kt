@@ -1,6 +1,5 @@
 package com.example.bcs371_full_quiz_game.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -34,7 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.example.bcs371_full_quiz_game.QuizActivity
-import com.example.bcs371_full_quiz_game.ui.theme.getStoredCredentials
+import com.example.bcs371_full_quiz_game.ui.data.getStoredCredentials
 
 @Composable
 fun LoginScreen(navController: NavController) {

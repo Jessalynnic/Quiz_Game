@@ -33,8 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.bcs371_full_quiz_game.ui.theme.getStoredCredentials
-import com.example.bcs371_full_quiz_game.ui.theme.saveUserData
+import com.example.bcs371_full_quiz_game.ui.data.saveUserData
 
 @Composable
 fun RegisterScreen(navController: NavController) {
